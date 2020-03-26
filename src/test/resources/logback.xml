@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd">
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${user.dir}/target/logs/${project.artifactId}.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%date %level [%thread] [%-5level] [%logger] [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Send debug messages to System.out -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] [%-5level] [%logger] [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.eclipse.aether" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="com.redhat.emea" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="org.drools" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+
+    <!-- By default, the level of the root level is set to DEBUG -->
+    <root level="OFF">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

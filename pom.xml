@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.redhat.emea.es.mw.model</groupId>
+    <artifactId>rh-dm-7-datamodels-examples</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Data Objects to Testing BPM, DM :: Maven Project</name>
+    <description>Data Objects to Testing BPM, DM :: Maven Project</description>
+    <packaging>jar</packaging>
+    <url>http://www.redhat.com/</url>
+    <inceptionYear>2020</inceptionYear>
+    <organization>
+        <name>Red Hat</name>
+        <url>http://www.redhat.com/</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Antonio Arjona</name>
+            <email>aarjona@redhat.com</email>
+            <organization>Red Hat</organization>
+            <organizationUrl>http://www.redhat.com/</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone />
+        </developer>
+    </developers>
+    <build>
+        <plugins>
+            <plugin>
+                <!-- create the source assemblies -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/src.xml</descriptor>
+                    </descriptors>
+                    <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>${compiler.source}</source>
+                    <target>${compiler.target}</target>
+                    <compilerArgs>
+                        <arg>-Xlint:unchecked</arg>
+                        <!-- <arg>-Xlint:deprecated</arg> -->
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Created-By>Red Hat</Created-By>
+                            <Implementation-BuildTime>${maven.build.timestamp}</Implementation-BuildTime>
+                            <version-app>${project.version}</version-app>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://access.redhat.com/solutions/3363991 -->
+            <dependency>
+                <groupId>com.redhat.ba</groupId>
+                <artifactId>ba-platform-bom</artifactId>
+                <version>${ba-platform-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <profiles>
+        <profile>
+            <id>jaxb</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>jaxb2-maven-plugin</artifactId>
+                        <version>${jaxb2-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>xjc-schema1</id>
+                                <goals>
+                                    <goal>xjc</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                                    <noGeneratedHeaderComments>true</noGeneratedHeaderComments>
+                                    <generateEpisode>false</generateEpisode>
+                                    <clearOutputDir>false</clearOutputDir>
+                                    <verbose>true</verbose>
+                                    <extension>true</extension>
+                                    <enableIntrospection>true</enableIntrospection>
+                                    <sources>
+                                        <source>${project.basedir}/src/main/xsd</source>
+                                    </sources>
+                                    <xjbSources>
+                                        <xjbSource>${project.basedir}/src/main/xjb/binding.xjb</xjbSource>
+                                    </xjbSources>
+                                    <arguments>
+                                        <argument>-Xannotate</argument>
+                                    </arguments>
+                                    <failOnNoSchemas>false</failOnNoSchemas>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jaxb2</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jvnet.jaxb2.maven2</groupId>
+                        <artifactId>maven-jaxb22-plugin</artifactId>
+                        <version>${maven-jaxb22-plugin.version}</version>
+                        <configuration>
+                            <schemaLanguage>XMLSCHEMA</schemaLanguage>
+                            <schemaDirectory>${basedir}/src/main/xsd</schemaDirectory>
+                            <generateDirectory>${basedir}/src/main/java</generateDirectory>
+                            <episodeFile>${project.build.directory}/META-INF/sun-jaxb.episode</episodeFile>
+                            <bindingDirectory>${basedir}/src/main/xjb</bindingDirectory>
+                            <forceRegenerate>false</forceRegenerate>
+                            <verbose>true</verbose>
+                            <noFileHeader>true</noFileHeader>
+                            <specVersion>2.2</specVersion>
+                            <episode>true</episode>
+                            <useDependenciesAsEpisodes>true</useDependenciesAsEpisodes>
+                            <extension>true</extension>
+                            <markGenerated>false</markGenerated>
+                            <args>
+                                <arg>-Xannotate</arg>
+                                <arg>-Xboolean-getter</arg>
+                                <arg>-Xsetters-mode=direct</arg>
+                                <arg>-Xsetters</arg>
+                                <!-- <arg>-Xcopyable</arg> <arg>-XtoString</arg> <arg>-Xequals</arg> <arg>-XhashCode</arg> <arg>-Xpof</arg> <arg>-Xmergeable</arg> -->
+                            </args>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>generate-entities</id>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <schemaIncludes>
+                                        <include>model.xsd</include>
+                                    </schemaIncludes>
+                                    <bindingIncludes>
+                                        <include>*.xml</include>
+                                        <include>*.xjb</include>
+                                    </bindingIncludes>
+                                    <extension>true</extension>
+                                    <plugins>
+                                        <plugin>
+                                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                                            <artifactId>jaxb2-basics</artifactId>
+                                            <version>0.6.0</version>
+                                        </plugin>
+                                        <dependency>
+                                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                                            <artifactId>jaxb2-namespace-prefix</artifactId>
+                                            <version>1.3</version>
+                                        </dependency>
+                                        <plugin>
+                                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                                            <artifactId>jaxb2-basics-annotate</artifactId>
+                                            <version>${jaxb2-basics-annotate.version}</version>
+                                        </plugin>
+                                        <plugin>
+                                            <groupId>com.github.sanity4j</groupId>
+                                            <artifactId>jaxb-booleangetter-plugin</artifactId>
+                                            <version>1.0</version>
+                                        </plugin>
+                                        <!-- plugin> <groupId>net.sf.sanity4j</groupId> <artifactId>jaxb-booleangetter-plugin</artifactId> <version>${jaxb-booleangetter-plugin.version}</version>
+                                            </plugin -->
+                                    </plugins>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>tests</id>
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>${basedir}/src/test/resources</directory>
+                        <filtering>true</filtering>
+                    </testResource>
+                </testResources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>${project.build.testOutputDirectory}/testng/testng.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <maven.test.skip>false</maven.test.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>cep01</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>${exec-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.redhat.emea.es.lab.kie.test.App</mainClass>
+                            <classpathScope>test</classpathScope>
+                            <systemProperties>
+                                <!-- To test
+                                <property>
+                                    <key>kie.maven.offline.force</key>
+                                    <value>true</value>
+                                </property>
+                                <property>
+                                    <key>kie.maven.settings.custom</key>
+                                    <value>${base.dir}/src/test/resources/maven/custom-maven-settings-offline.xml</value>
+                                </property> -->
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-ci</artifactId>
+            <scope>provided</scope>
+            <!-- scope>test</scope -->
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-dmn-core</artifactId>
+            <scope>provided</scope>
+            <!-- scope>test</scope -->
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-dmn-feel</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-dmn-model</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-annotate</artifactId>
+            <version>${jaxb2-basics-annotate.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- kie-server-api -->
+        <dependency>
+            <groupId>org.kie.server</groupId>
+            <artifactId>kie-server-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- kie-server-client -->
+        <dependency>
+            <groupId>org.kie.server</groupId>
+            <artifactId>kie-server-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-decisiontables</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-internal</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-workbench-models-guided-dtable</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <properties>
+        <!-- ========================== -->
+        <!-- maven exclusive properties -->
+        <!-- ========================== -->
+        <maven.test.skip>true</maven.test.skip>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyy-MM-dd_HH:mm:ss</maven.build.timestamp.format>
+        <createChecksum>true</createChecksum>
+        <compiler.source>8</compiler.source>
+        <compiler.target>8</compiler.target>
+        <!-- ===================== -->
+        <!-- Dependencies versions -->
+        <!-- ===================== -->
+        <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
+        <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <maven-jaxb22-plugin.version>0.14.0</maven-jaxb22-plugin.version>
+        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+        <jaxb2-maven-plugin.version>2.5.0</jaxb2-maven-plugin.version>
+        <jaxb2-basics-annotate.version>1.1.0</jaxb2-basics-annotate.version>
+        <jaxb-booleangetter-plugin.version></jaxb-booleangetter-plugin.version>
+        <!-- ================= -->
+        <!-- Others Properties -->
+        <!-- ================= -->
+        <ba-platform-bom.version>7.6.0.redhat-00004</ba-platform-bom.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <logback-core.version>1.2.3</logback-core.version>
+        <!-- <kie.runtime.version>7.18.0.Final-redhat-00002</kie.runtime.version> <jbpm.runtime.version>7.7.0.Final-redhat-8</jbpm.runtime.version> -->
+        <testng.version>6.14.2</testng.version>
+
+
+    </properties>
+</project>

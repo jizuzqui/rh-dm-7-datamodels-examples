@@ -1,0 +1,12 @@
+{
+  "model-namespace" : "https://kiegroup.org/dmn/_CFE0942C-A3F2-43FD-926A-CC095127C219",
+  "model-name" : "EvalPMML",
+  "decision-name" : [ ],
+  "decision-id" : [ ],
+  "decision-service-name" : null,
+  "dmn-context" : {"Datos" : {"com.redhat.emea.es.lab.model.exafeel.DataDmn":{
+  "city" : "bcn",
+  "humedad" : 40,
+  "temperatura" : 20
+}}}
+}

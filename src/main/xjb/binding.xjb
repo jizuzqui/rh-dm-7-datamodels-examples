@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jxb:bindings version="1.0"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:annox="http://annox.dev.java.net"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="urn:com:redhat:emea:es:lab:model:mock"
+    xmlns:tns01="urn:com:redhat:emea:es:lab:model:dmn:exafeel"
+    jxb:extensionBindingPrefixes="annox">
+
+    <jxb:globalBindings collectionType="java.util.ArrayList" underscoreBinding="asCharInWord"
+        enableJavaNamingConventions="true" generateIsSetMethod="false"
+        typesafeEnumBase="xs:string" typesafeEnumMemberName="generateName">
+        <jxb:serializable uid="1" />
+        <xjc:javaType name="java.util.Date" xmlType="xs:dateTime" adapter="com.redhat.emea.es.lab.model.adapter.LocalDateTimeAdapter"/>
+    </jxb:globalBindings>
+
+    <!-- annox:annotate target="setter|setter-parameter|getter|field|class" -->
+    <jxb:bindings schemaLocation="../xsd/model_dmn.xsd">
+        <jxb:bindings node="//xs:element[@name='DataDmn']//xs:element[@name='temperatura']">
+            <annox:annotate target="class">@org.kie.dmn.feel.lang.FEELType</annox:annotate>
+            <annox:annotate target="getter">@org.kie.dmn.feel.lang.FEELProperty("Temp Media")</annox:annotate>
+        </jxb:bindings>
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="../xsd/model_cep.xsd">
+        <jxb:bindings node="//xs:element[@name='ABoxEvent']/xs:complexType">
+            <annox:annotate target="class">@org.kie.api.definition.type.Role(Role.Type.EVENT)</annox:annotate>
+            <!-- annox:annotate target="class">@org.kie.api.definition.type.Expires(value = "0s", policy = Policy.TIME_HARD)</annox:annotate-->
+        </jxb:bindings>
+        <jxb:bindings node="//xs:element[@name='AnIntervalEvent']/xs:complexType">
+            <annox:annotate target="class">@org.kie.api.definition.type.Role(Role.Type.EVENT)</annox:annotate>
+            <annox:annotate target="class">@org.kie.api.definition.type.Timestamp(value="origen_TS")</annox:annotate>
+            <annox:annotate target="class">@org.kie.api.definition.type.Duration(value="duration_TS")</annox:annotate>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:element[@name='AnTransactionEvent']/xs:complexType">
+            <annox:annotate target="class">@org.kie.api.definition.type.Role(Role.Type.EVENT)</annox:annotate>
+            <annox:annotate target="class">@org.kie.api.definition.type.Timestamp(value="origen_TS")</annox:annotate>
+            <annox:annotate target="class">@org.kie.api.definition.type.Expires(value = "0s", policy = Policy.TIME_HARD)</annox:annotate>
+        </jxb:bindings>
+    </jxb:bindings>
+
+</jxb:bindings>

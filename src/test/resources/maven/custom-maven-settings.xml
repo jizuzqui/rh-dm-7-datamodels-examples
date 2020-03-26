@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!-- localRepository
+        | The path to the local repository maven will use to store artifacts.
+        |
+        | Default: ${user.home}/.m2/repository -->
+    <localRepository>/serveis/dades/lab/jboss/rhdm/m2repo</localRepository>
+    <profiles>
+        <profile>
+            <id>repo-rhdm</id>
+            <repositories>
+                <repository>
+                    <id>dev-local-maven-repository</id>
+                    <name>Decision Manager 7.0.0 GA Repository</name>
+                    <url>file:///home/user1/.m2/repository</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>red-hat-public-repository</id>
+                    <name>Red Hat Public Repository GA</name>
+                    <url>https://maven.repository.redhat.com/ga/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>jboss-public-repository-group</id>
+                    <name>JBoss Public Repository Group</name>
+                    <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>central maven repo</id>
+                    <name>Central Repository https</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>central</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>red-hat-public-plugin-repository</id>
+                    <url>https://maven.repository.redhat.com/ga/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>central</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                 </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>repo-rhdm</activeProfile>
+    </activeProfiles>
+
+</settings>

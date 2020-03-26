@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Entities Suite 01" verbose="1" parallel="false">
+
+    <parameter name="url"       value="${env.base.url}/kie-server/services/rest/server"/>
+    <parameter name="url"       value="http://localhost:8080/kie-server/services/rest/server"/>
+    <parameter name="url"       value="http://localhost:6080/kie-server/services/rest/server"/>
+    <parameter name="url"       value="http://127.0.0.1:6080/kie-server/services/rest/server"/>
+    <parameter name="user"      value="rhdm"     />
+    <parameter name="password"  value="redhat00" />
+    <parameter name="timeout"   value="30000"    />
+
+    <parameter name="container"     value="rh-dm-7-cep-example-01_1.0.0-SNAPSHOT"/>
+    <parameter name="container"     value="prj-cep-01_1.0.0-SNAPSHOT"/>
+    <parameter name="ksessiontimer" value="timers"/>
+    <parameter name="ksessioncep"   value="cep02"/>
+
+    <!--
+    <parameter name="processid" value="rh-mock-test-001.Process_01"/>
+    <parameter name="kiebase"   value="default-kbase" />
+     -->
+    <!-- parameter name="container"  value="rh-dm-7-rules-02_1.1-SNAPSHOT"/-->
+    <!-- parameter name="container"  value="rh-dm-7-rules-02_1.0-SNAPSHOT"/-->
+    <!-- <parameter name="container" value="rh-dm-7-rules-04_1.0.4"/> -->
+    <!-- parameter name="container"  value="rh-dm-7-rules-03_1.0-SNAPSHOT"/-->
+
+    <test name="FUN001" enabled="false" preserve-order="true" verbose="10" time-out="30000" parallel="false">
+        <groups>
+            <run>
+                <include name="grp_cep" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.redhat.emea.es.lab.cep.test.ExampleRuleTimerTest"/>
+        </classes>
+    </test>
+
+    <test name="FUN002" enabled="true" preserve-order="true" verbose="10" time-out="30000" parallel="false">
+        <groups>
+            <run>
+                <include name="grp_cep" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.redhat.emea.es.lab.cep.test.ExampleCepOperatorsTest"/>
+        </classes>
+    </test>
+</suite>

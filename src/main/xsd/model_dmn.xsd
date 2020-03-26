@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xml="http://www.w3.org/XML/1998/namespace"
+        xmlns:ns1="http://www.w3.org/2005/05/xmlmime"
+        xmlns:tns="urn:com:redhat:emea:es:lab:model:dmn:exafeel"
+        targetNamespace="urn:com:redhat:emea:es:lab:model:dmn:exafeel"
+        elementFormDefault="qualified">
+
+    <annotation>
+        <documentation>A Profile Example for DMN :: jaxb</documentation>
+    </annotation>
+
+    <element name="DataDmn">
+        <annotation>
+            <documentation>DataDmn :: A Data example </documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="city"          type="xs:string" nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="temperatura"   type="xs:int"    nillable="true"  minOccurs="1" maxOccurs="1" />
+                <element name="humedad"       type="xs:int"    nillable="true"  minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="Violation">
+        <annotation>
+            <documentation>Violation :: A Data example </documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="code"         type="xs:string"  nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="type"         type="xs:string"  nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="actualSpeed"  type="xs:int"    nillable="true"  minOccurs="1" maxOccurs="1" />
+                <element name="speedLimit"   type="xs:int"    nillable="true"  minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="Driver">
+        <annotation>
+            <documentation>Driver :: A Data example </documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="name"   type="xs:string" nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="points" type="xs:int"    nillable="true"  minOccurs="1" maxOccurs="1" />
+                <element name="age"    type="xs:int"    nillable="true"  minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="JavaPojoUtilDate">
+        <annotation>
+            <documentation>JavaPojoUtilDate :: A Data example </documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="name"      type="xs:string"   nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="when"      type="xs:dateTime" nillable="true"  minOccurs="1" maxOccurs="1" />
+                <element name="initial"   type="xs:string"   nillable="true"  minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+</schema>

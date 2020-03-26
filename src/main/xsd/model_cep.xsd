@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xml="http://www.w3.org/XML/1998/namespace"
+        xmlns:ns1="http://www.w3.org/2005/05/xmlmime"
+        xmlns:tns="urn:com:redhat:emea:es:lab:model:cep:commerce"
+        targetNamespace="urn:com:redhat:emea:es:lab:model:cep:commerce"
+        elementFormDefault="qualified">
+
+    <annotation>
+        <documentation>A Profile Example for CEP :: jaxb</documentation>
+    </annotation>
+
+    <!-- Begin  -->
+    <complexType name="BaseEvent" abstract="true">
+        <annotation>
+            <documentation>Base Event :: A CEP example </documentation>
+        </annotation>
+        <sequence>
+            <!--  -->
+            <element name="eventid"           type="xs:string"   nillable="false" minOccurs="1" maxOccurs="1" />
+            <element name="origen_TS"         type="xs:long"     nillable="false" minOccurs="1" maxOccurs="1" />
+            <element name="event_TS"          type="xs:long"     nillable="false" minOccurs="1" maxOccurs="1" />
+            <element name="timestamp"         type="xs:long"     nillable="false" minOccurs="1" maxOccurs="1" />
+            <element name="dateHumanReadable" type="xs:dateTime" nillable="true"  minOccurs="1" maxOccurs="1" />
+        </sequence>
+    </complexType>
+
+    <element name="AnIntervalEvent">
+        <annotation>
+            <documentation>AnIntervalEvent :: A CEP example </documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="tns:BaseEvent">
+                    <sequence>
+                        <element name="duration_TS"   type="xs:long"   nillable="false" minOccurs="1" maxOccurs="1" />
+                        <element name="information"   type="xs:string" nillable="false" minOccurs="1" maxOccurs="1" />
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="ABoxEvent">
+        <annotation>
+            <documentation>ABoxEvent :: A CEP example </documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="tns:BaseEvent">
+                    <sequence>
+                        <element name="machineid"         type="xs:string"   nillable="false" minOccurs="1" maxOccurs="1" />
+                        <element name="box"               type="xs:int"      nillable="true"  minOccurs="1" maxOccurs="1" />
+                        <element name="totalbox"          type="xs:int"      nillable="true"  minOccurs="1" maxOccurs="1" />
+                        <element name="status"            type="xs:string"   nillable="false" minOccurs="1" maxOccurs="1" />
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="AnTransactionEvent">
+        <annotation>
+            <documentation>AnTransactionEvent :: A CEP example</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="tns:BaseEvent">
+                    <sequence>
+                        <element name="commerceid"               type="xs:string"   nillable="false" minOccurs="1" maxOccurs="1" />
+                        <element name="tpv"                      type="xs:string"   nillable="true"  minOccurs="1" maxOccurs="1" />
+                        <element name="creditcard"               type="xs:string"   nillable="true"  minOccurs="1" maxOccurs="1" />
+                        <element name="paymentgateway"           type="xs:string"   nillable="true"  minOccurs="1" maxOccurs="1" />
+                        <element name="paymentdatefromcommerce"  type="xs:dateTime" nillable="true"  minOccurs="1" maxOccurs="1" />
+                        <element name="paymentpin"               type="xs:boolean"  nillable="true"  minOccurs="1" maxOccurs="1" default="false"/>
+                        <element name="paymentmode"              type="tns:PaymentMode" minOccurs="1" maxOccurs="1" />
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+  <xs:simpleType name="PaymentMode">
+        <xs:annotation>
+            <xs:documentation>Profile - PaymentMode</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CONTACTLESS" />
+            <xs:enumeration value="MOBILE"      />
+            <xs:enumeration value="INTPV"       />
+        </xs:restriction>
+    </xs:simpleType>
+
+</schema>

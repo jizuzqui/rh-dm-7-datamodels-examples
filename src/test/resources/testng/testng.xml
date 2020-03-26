@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="jBPM Suites" verbose="1" parallel="false">
+
+    <suite-files>
+        <suite-file path="target/test-classes/testng/testng_suite_dmn_01.xml"></suite-file>
+        <suite-file path="target/test-classes/testng/testng_suite_cep_01.xml"></suite-file>
+    </suite-files>
+</suite>

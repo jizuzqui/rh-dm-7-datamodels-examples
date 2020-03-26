@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xml="http://www.w3.org/XML/1998/namespace"
+        xmlns:ns1="http://www.w3.org/2005/05/xmlmime"
+        xmlns:tns="urn:com:redhat:emea:es:lab:model:mock"
+        targetNamespace="urn:com:redhat:emea:es:lab:model:mock"
+        elementFormDefault="qualified">
+
+    <annotation>
+        <documentation>A Profile Example :: jaxb</documentation>
+    </annotation>
+
+    <!-- Begin  -->
+    <complexType name="BaseAggregate" abstract="true">
+        <annotation>
+            <documentation>Base Aggregate :: Aggregate</documentation>
+        </annotation>
+        <sequence>
+            <element name="closeTimeTS"       type="xs:long"    nillable="true" minOccurs="1" maxOccurs="1" />
+            <element name="aggregateJackpot"  type="xs:float"   nillable="true" minOccurs="1" maxOccurs="1" />
+        </sequence>
+    </complexType>
+
+    <complexType name="BaseItem" abstract="true">
+        <annotation>
+            <documentation>BaseItem :: Item</documentation>
+        </annotation>
+        <sequence>
+            <!-- PRIMARY KEY ZONE -->
+            <element name="id"          type="xs:string"  nillable="false" minOccurs="1" maxOccurs="1" />
+            <element name="idLocal"     type="xs:integer" nillable="true"  minOccurs="1" maxOccurs="1" />
+            <element name="idItem"      type="xs:long"    nillable="true"  minOccurs="1" maxOccurs="1" />
+            <!-- Control Fields -->
+            <element name="created"     type="xs:dateTime"  nillable="true"  minOccurs="1" maxOccurs="1" />
+            <element name="modified"    type="xs:dateTime"  nillable="true"  minOccurs="1" maxOccurs="1" />
+            <element name="owner"       type="xs:string"    nillable="true"  minOccurs="1" maxOccurs="1" />
+            <!-- Numeric Examples -->
+            <element name="active"      type="xs:boolean" nillable="true"  minOccurs="1" maxOccurs="1" default="true"/>
+            <!-- Pocket  -->
+            <element name="totalf"      type="xs:float"   nillable="true"  minOccurs="1" maxOccurs="1" default="0.0"/>
+            <element name="totalD"      type="xs:double"  nillable="true"  minOccurs="1" maxOccurs="1" default="0.0"/>
+            <element name="totalde"     type="xs:decimal" nillable="true"  minOccurs="1" maxOccurs="1" default="0.0"/>
+            <element name="years"       type="xs:int"     nillable="true"  minOccurs="1" maxOccurs="1" default="0"/>
+            <element name="yearsS"      type="xs:short"   nillable="true"  minOccurs="1" maxOccurs="1" default="0"/>
+            <element name="yearsB"      type="xs:byte"    nillable="true"  minOccurs="1" maxOccurs="1" default="0"/>
+        </sequence>
+    </complexType>
+
+    <element name="Contract">
+        <annotation>
+            <documentation>Contract :: An example Contract</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="tns:BaseItem">
+                    <sequence>
+                        <element ref="tns:Attachment"  minOccurs="0" maxOccurs="unbounded" /> <!-- ARRAY JSON [] -->
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="AggregateDay">
+        <annotation>
+            <documentation></documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="tns:BaseAggregate">
+                    <sequence>
+                        <element name="dateHumanReadable"  type="xs:date"  nillable="true" minOccurs="1" maxOccurs="1" />
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <element name="Tax">
+        <annotation>
+            <documentation></documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="Name"        type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Description" type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Cost"        type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Currency"    type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Build"       type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Revision"    type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="FirmwareVersion">
+        <annotation>
+            <documentation>FirmwareVersion :: Item</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="MajorRevision" type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="MinorRevision" type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Major"         type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Minor"         type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Build"         type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Revision"      type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="Data">
+        <annotation>
+            <documentation>Data</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="Name"  type="xs:string" nillable="true" minOccurs="1" maxOccurs="1" />
+                <element name="Value" type="xs:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="Attachment" abstract="true">
+        <annotation>
+            <documentation>Attachment</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="dataHandler"     type="xs:base64Binary" nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="hexDataHandler"  type="xs:hexBinary"    nillable="false" minOccurs="1" maxOccurs="1" />
+                <element name="mimeType"        type="xs:string"       nillable="true"  minOccurs="1" maxOccurs="1" />
+                <element name="originalName"    type="xs:string"       nillable="true"  minOccurs="1" maxOccurs="1" />
+                <element ref="tns:Data"         minOccurs="0" maxOccurs="unbounded"                                 /> <!-- ARRAY JSON [] -->
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="Incident">
+        <annotation>
+            <documentation>Incident Entity - Element</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <xs:element name="priority"   type="tns:Priority" minOccurs="1" maxOccurs="1" />
+                <xs:element name="status"     type="tns:Status"   minOccurs="1" maxOccurs="1" />
+                <xs:element name="contractId" type="xs:string"    minOccurs="1" maxOccurs="1" />
+            </sequence>
+        </complexType>
+    </element>
+
+    <simpleType name="Priority">
+        <annotation>
+            <documentation>Priority :: Element</documentation>
+        </annotation>
+        <restriction base="xs:string">
+            <enumeration value="CRITICAL" />
+            <enumeration value="HIGH"     />
+            <enumeration value="NORMAL"   />
+            <enumeration value="LOW"      />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="Status">
+        <annotation>
+            <documentation>Status :: Element</documentation>
+        </annotation>
+        <restriction base="xs:string">
+            <xs:enumeration value="OPEN"           />
+            <xs:enumeration value="WORKINPROGRESS" />
+            <xs:enumeration value="ASSIGNED"       />
+            <xs:enumeration value="PENDING"        />
+            <xs:enumeration value="CLOSED"         />
+        </restriction>
+    </simpleType>
+
+</schema>
